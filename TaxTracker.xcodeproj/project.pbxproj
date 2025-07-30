@@ -7,10 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		135E6B522E3AC3640072EB83 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135E6B512E3AC3630072EB83 /* WidgetKit.framework */; };
+		135E6B542E3AC3640072EB83 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135E6B532E3AC3640072EB83 /* SwiftUI.framework */; };
+		135E6B5F2E3AC3640072EB83 /* TaxTrackerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 135E6B4F2E3AC3630072EB83 /* TaxTrackerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		13B6C78C2E3ABDB8002062A5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 13B6C78B2E3ABDB8002062A5 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		135E6B5D2E3AC3640072EB83 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13B6C7312E3ABBAC002062A5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 135E6B4E2E3AC3630072EB83;
+			remoteInfo = TaxTrackerWidgetExtension;
+		};
 		13B6C7AC2E3ABEF1002062A5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 13B6C7312E3ABBAC002062A5 /* Project object */;
@@ -20,14 +30,49 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		135E6B602E3AC3640072EB83 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				135E6B5F2E3AC3640072EB83 /* TaxTrackerWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		135E6B4F2E3AC3630072EB83 /* TaxTrackerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaxTrackerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		135E6B512E3AC3630072EB83 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		135E6B532E3AC3640072EB83 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		13B6C7892E3ABCAE002062A5 /* TaxTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaxTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B6C78B2E3ABDB8002062A5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		13B6C7922E3ABE40002062A5 /* CoreTaxTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreTaxTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B6C7A82E3ABEF1002062A5 /* TaxTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TaxTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		135E6B632E3AC3640072EB83 /* Exceptions for "TaxTrackerWidget" folder in "TaxTrackerWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 135E6B4E2E3AC3630072EB83 /* TaxTrackerWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		135E6B552E3AC3640072EB83 /* TaxTrackerWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				135E6B632E3AC3640072EB83 /* Exceptions for "TaxTrackerWidget" folder in "TaxTrackerWidgetExtension" target */,
+			);
+			path = TaxTrackerWidget;
+			sourceTree = "<group>";
+		};
 		13B6C73B2E3ABBAC002062A5 /* TaxTracker */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = TaxTracker;
@@ -51,6 +96,15 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		135E6B4C2E3AC3630072EB83 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				135E6B542E3AC3640072EB83 /* SwiftUI.framework in Frameworks */,
+				135E6B522E3AC3640072EB83 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13B6C7362E3ABBAC002062A5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -75,6 +129,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		135E6B502E3AC3630072EB83 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				135E6B512E3AC3630072EB83 /* WidgetKit.framework */,
+				135E6B532E3AC3640072EB83 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		13B6C7302E3ABBAC002062A5 = {
 			isa = PBXGroup;
 			children = (
@@ -83,18 +146,21 @@
 				13B6C73B2E3ABBAC002062A5 /* TaxTracker */,
 				13B6C7932E3ABE40002062A5 /* CoreTaxTracker */,
 				13B6C7A92E3ABEF1002062A5 /* TaxTrackerTests */,
+				135E6B552E3AC3640072EB83 /* TaxTrackerWidget */,
+				135E6B502E3AC3630072EB83 /* Frameworks */,
 				13B6C78A2E3ABCFF002062A5 /* Products */,
-				13B6C7A82E3ABEF1002062A5 /* TaxTrackerTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
 		13B6C78A2E3ABCFF002062A5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				13B6C7A82E3ABEF1002062A5 /* TaxTrackerTests.xctest */,
+				135E6B4F2E3AC3630072EB83 /* TaxTrackerWidgetExtension.appex */,
 				13B6C7892E3ABCAE002062A5 /* TaxTracker.app */,
 				13B6C7922E3ABE40002062A5 /* CoreTaxTracker.framework */,
 			);
-			path = Products;
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -110,6 +176,28 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		135E6B4E2E3AC3630072EB83 /* TaxTrackerWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 135E6B642E3AC3640072EB83 /* Build configuration list for PBXNativeTarget "TaxTrackerWidgetExtension" */;
+			buildPhases = (
+				135E6B4B2E3AC3630072EB83 /* Sources */,
+				135E6B4C2E3AC3630072EB83 /* Frameworks */,
+				135E6B4D2E3AC3630072EB83 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				135E6B552E3AC3640072EB83 /* TaxTrackerWidget */,
+			);
+			name = TaxTrackerWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = TaxTrackerWidgetExtension;
+			productReference = 135E6B4F2E3AC3630072EB83 /* TaxTrackerWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		13B6C7382E3ABBAC002062A5 /* TaxTracker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B6C7442E3ABBAD002062A5 /* Build configuration list for PBXNativeTarget "TaxTracker" */;
@@ -117,10 +205,12 @@
 				13B6C7352E3ABBAC002062A5 /* Sources */,
 				13B6C7362E3ABBAC002062A5 /* Frameworks */,
 				13B6C7372E3ABBAC002062A5 /* Resources */,
+				135E6B602E3AC3640072EB83 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				135E6B5E2E3AC3640072EB83 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				13B6C73B2E3ABBAC002062A5 /* TaxTracker */,
@@ -189,6 +279,9 @@
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
+					135E6B4E2E3AC3630072EB83 = {
+						CreatedOnToolsVersion = 26.0;
+					};
 					13B6C7382E3ABBAC002062A5 = {
 						CreatedOnToolsVersion = 26.0;
 					};
@@ -218,11 +311,19 @@
 				13B6C7382E3ABBAC002062A5 /* TaxTracker */,
 				13B6C7912E3ABE40002062A5 /* CoreTaxTracker */,
 				13B6C7A72E3ABEF1002062A5 /* TaxTrackerTests */,
+				135E6B4E2E3AC3630072EB83 /* TaxTrackerWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		135E6B4D2E3AC3630072EB83 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13B6C7372E3ABBAC002062A5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -248,6 +349,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		135E6B4B2E3AC3630072EB83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		13B6C7352E3ABBAC002062A5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -272,6 +380,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		135E6B5E2E3AC3640072EB83 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 135E6B4E2E3AC3630072EB83 /* TaxTrackerWidgetExtension */;
+			targetProxy = 135E6B5D2E3AC3640072EB83 /* PBXContainerItemProxy */;
+		};
 		13B6C7AD2E3ABEF1002062A5 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 13B6C7382E3ABBAC002062A5 /* TaxTracker */;
@@ -280,6 +393,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		135E6B612E3AC3640072EB83 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 13B6C77B2E3ABC9B002062A5 /* Project */;
+			baseConfigurationReferenceRelativePath = BuildConfig/TaxTrackerWidget.xcconfig;
+			buildSettings = {
+				DEVELOPMENT_TEAM = VG2YYSKSHY;
+			};
+			name = Debug;
+		};
+		135E6B622E3AC3640072EB83 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 13B6C77B2E3ABC9B002062A5 /* Project */;
+			baseConfigurationReferenceRelativePath = BuildConfig/TaxTrackerWidget.xcconfig;
+			buildSettings = {
+				DEVELOPMENT_TEAM = VG2YYSKSHY;
+			};
+			name = Release;
+		};
 		13B6C7422E3ABBAD002062A5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 13B6C77B2E3ABC9B002062A5 /* Project */;
@@ -301,6 +432,7 @@
 			baseConfigurationReferenceAnchor = 13B6C77B2E3ABC9B002062A5 /* Project */;
 			baseConfigurationReferenceRelativePath = BuildConfig/TaxTracker.xcconfig;
 			buildSettings = {
+				DEVELOPMENT_TEAM = VG2YYSKSHY;
 			};
 			name = Debug;
 		};
@@ -309,6 +441,7 @@
 			baseConfigurationReferenceAnchor = 13B6C77B2E3ABC9B002062A5 /* Project */;
 			baseConfigurationReferenceRelativePath = BuildConfig/TaxTracker.xcconfig;
 			buildSettings = {
+				DEVELOPMENT_TEAM = VG2YYSKSHY;
 			};
 			name = Release;
 		};
@@ -480,6 +613,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		135E6B642E3AC3640072EB83 /* Build configuration list for PBXNativeTarget "TaxTrackerWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				135E6B612E3AC3640072EB83 /* Debug */,
+				135E6B622E3AC3640072EB83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		13B6C7342E3ABBAC002062A5 /* Build configuration list for PBXProject "TaxTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

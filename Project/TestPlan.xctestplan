@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "0F49FFAA-1947-4750-B92D-08CA879B3B1A",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:TaxTracker.xcodeproj",
+        "identifier" : "13B6C7A72E3ABEF1002062A5",
+        "name" : "TaxTrackerTests"
+      }
+    }
+  ],
+  "version" : 1
+}

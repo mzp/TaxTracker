@@ -12,7 +12,7 @@ struct ContentView: View {
     var model = TaxTrackingModel()
 
     var body: some View {
-        VStack {
+        TaxTrackingModelContainer { model, _ in
             PayrollCalendarChart(model: model)
         }
     }

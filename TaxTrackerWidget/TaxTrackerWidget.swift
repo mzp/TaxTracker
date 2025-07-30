@@ -46,10 +46,8 @@ struct SimpleEntry: TimelineEntry {
 
 struct TaxTrackerWidgetEntryView: View {
     var entry: Provider.Entry
-    var model = TaxTrackingModel()
-
     var body: some View {
-        VStack {
+        TaxTrackingModelContainer { model, _ in
             PayrollCalendarChart(model: model)
         }
     }

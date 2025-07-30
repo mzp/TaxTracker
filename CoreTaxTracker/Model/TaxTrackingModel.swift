@@ -6,13 +6,17 @@
 //
 
 import Foundation
+import SwiftData
+import SwiftUI
 
+@Model
 public class TaxTrackingModel {
     // MARK: - Planning
 
-    public let payrollCalendar: PayrollCalendar
-
-    public init() {
-        payrollCalendar = PayrollCalendar.current
+    @Transient
+    public var payrollCalendar: PayrollCalendar {
+        PayrollCalendar.current
     }
+
+    public init() {}
 }

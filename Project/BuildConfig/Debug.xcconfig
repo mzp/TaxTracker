@@ -1,0 +1,24 @@
+#include "Includes/Base.xcconfig"
+
+// MARK: - Debug information
+DEBUG_INFORMATION_FORMAT = dwarf
+
+// MARK: - Testing
+ENABLE_TESTABILITY = YES
+
+// MARK: - Optimization
+GCC_DYNAMIC_NO_PIC = NO
+GCC_OPTIMIZATION_LEVEL = 0
+
+// MARK: - Preprocessor definitions
+GCC_PREPROCESSOR_DEFINITIONS = DEBUG=1 $(inherited)
+
+// MARK: - Metal debug info
+MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE
+
+// MARK: - Architecture
+ONLY_ACTIVE_ARCH = YES
+
+// MARK: - Swift compilation
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG $(inherited)
+SWIFT_OPTIMIZATION_LEVEL = -Onone

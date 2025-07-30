@@ -1,1 +1,3 @@
 #include "Includes/App.xcconfig"
+
+OTHER_LDFLAGS = $(inherited) -framework CoreTaxTracker

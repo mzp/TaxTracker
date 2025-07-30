@@ -21,6 +21,20 @@
                ReferencedContainer = "container:TaxTracker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "13B6C7912E3ABE40002062A5"
+               BuildableName = "CoreTaxTracker.framework"
+               BlueprintName = "CoreTaxTracker"
+               ReferencedContainer = "container:TaxTracker.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

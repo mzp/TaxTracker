@@ -5,6 +5,7 @@
 //  Created by mzp on 2025/07/30.
 //
 
+import CoreTaxTracker
 import SwiftUI
 import WidgetKit
 
@@ -45,14 +46,11 @@ struct SimpleEntry: TimelineEntry {
 
 struct TaxTrackerWidgetEntryView: View {
     var entry: Provider.Entry
+    var model = TaxTrackingModel()
 
     var body: some View {
         VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Emoji:")
-            Text(entry.emoji)
+            PayrollCalendarChart(model: model)
         }
     }
 }
@@ -71,8 +69,8 @@ struct TaxTrackerWidget: Widget {
                     .background()
             }
         }
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
+        .configurationDisplayName("Payroll calendar")
+        .description("Widget for payroll date")
     }
 }
 

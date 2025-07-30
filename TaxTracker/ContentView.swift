@@ -5,17 +5,16 @@
 //  Created by mzp on 2025/07/30.
 //
 
+import CoreTaxTracker
 import SwiftUI
 
 struct ContentView: View {
+    var model = TaxTrackingModel()
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            PayrollCalendarChart(model: model)
         }
-        .padding()
     }
 }
 

@@ -9,6 +9,20 @@ import Foundation
 import SwiftData
 import SwiftUI
 
+public enum TaxType: String, CaseIterable, Codable {
+    case federal
+    case state
+
+    public var displayName: String {
+        switch self {
+        case .federal:
+            return "Federal Tax"
+        case .state:
+            return "State Tax"
+        }
+    }
+}
+
 @Model
 public class TaxPaymentPlan {
     // MARK: - Payroll
@@ -16,12 +30,26 @@ public class TaxPaymentPlan {
     public var payrollStartDate: Date = Date()
     public var payrollInterval: Int = 14
 
-    // MARK: - Tax Deductions
+    // MARK: - Tax Withholdings
 
-    public var federalTaxDeduction: Double = 0.0
-    public var stateTaxDeduction: Double = 0.0
+    public var withholdings: [TaxType: Double] = [:]
 
-    public init() {}
+    public init() {
+        // Initialize with default values
+        for taxType in TaxType.allCases {
+            withholdings[taxType] = 0.0
+        }
+    }
+
+    // MARK: - Helpers
+
+    public func getTaxWithholding(for type: TaxType) -> Double {
+        return withholdings[type] ?? 0.0
+    }
+
+    public func setTaxWithholding(for type: TaxType, amount: Double) {
+        withholdings[type] = amount
+    }
 }
 
 @Model

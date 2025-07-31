@@ -14,8 +14,7 @@ struct PlanningForm: View {
 
     @State var date: Date = .init()
     @State var interval = 0
-    @State var federalTaxDeduction = 0.0
-    @State var stateTaxDeduction = 0.0
+    @State var taxWithholdings: [TaxType: Double] = [:]
 
     var body: some View {
         Form {
@@ -37,36 +36,30 @@ struct PlanningForm: View {
                 }
             }
 
-            Section("Tax Deductions") {
-                HStack {
-                    Text("Federal Tax")
-                    Spacer()
-                    TextField("$0.00", value: $federalTaxDeduction, format: .currency(code: "USD"))
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.trailing)
-                }
-                .onChange(of: federalTaxDeduction) {
-                    model.paymentPlan.federalTaxDeduction = federalTaxDeduction
-                    save()
-                }
-
-                HStack {
-                    Text("State Tax")
-                    Spacer()
-                    TextField("$0.00", value: $stateTaxDeduction, format: .currency(code: "USD"))
-                        .keyboardType(.decimalPad)
-                        .multilineTextAlignment(.trailing)
-                }
-                .onChange(of: stateTaxDeduction) {
-                    model.paymentPlan.stateTaxDeduction = stateTaxDeduction
-                    save()
+            Section("Tax Withholdings") {
+                ForEach(TaxType.allCases, id: \.self) { taxType in
+                    HStack {
+                        Text(taxType.displayName)
+                        Spacer()
+                        TextField("$0.00", value: Binding(
+                            get: { taxWithholdings[taxType] ?? 0.0 },
+                            set: { newValue in
+                                taxWithholdings[taxType] = newValue
+                                model.paymentPlan.setTaxWithholding(for: taxType, amount: newValue)
+                                save()
+                            }
+                        ), format: .currency(code: "USD"))
+                            .keyboardType(.decimalPad)
+                            .multilineTextAlignment(.trailing)
+                    }
                 }
             }
         }.onAppear {
             date = model.paymentPlan.payrollStartDate
             interval = model.paymentPlan.payrollInterval
-            federalTaxDeduction = model.paymentPlan.federalTaxDeduction
-            stateTaxDeduction = model.paymentPlan.stateTaxDeduction
+            for taxType in TaxType.allCases {
+                taxWithholdings[taxType] = model.paymentPlan.getTaxWithholding(for: taxType)
+            }
         }
     }
 

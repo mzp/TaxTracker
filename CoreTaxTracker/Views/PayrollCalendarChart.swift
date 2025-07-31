@@ -13,12 +13,17 @@ public struct PayrollCalendarChart: View {
     public var body: some View {
         LabeledContent("Next pay") {
             if let date = nextPayday {
-                VStack(alignment: .center) {
-                    Text("\(date, style: .date)").font(.title)
-                    Text("\(date, style: .offset)")
-                }
+                Text("\(date, style: .date)").font(.headline)
             } else {
-                Text("-").font(.title)
+                Text("-")
+            }
+        }
+        HStack {
+            LabeledContent("Federal Tax") {
+                Text("$\(model.paymentPlan.getTaxWithholding(for: .federal), format: .number)").font(.subheadline)
+            }
+            LabeledContent("State Tax") {
+                Text("$\(model.paymentPlan.getTaxWithholding(for: .state), format: .number)").font(.subheadline)
             }
         }
     }
@@ -30,7 +35,9 @@ public struct PayrollCalendarChart: View {
 }
 
 #Preview {
-    PayrollCalendarChart()
-        .environment(TaxTrackingModel())
-        .padding()
+    Form {
+        PayrollCalendarChart()
+            .environment(TaxTrackingModel())
+    }
+    .padding()
 }

@@ -15,8 +15,10 @@ struct TaxPaymentPlanTests {
         let plan = TaxPaymentPlan()
 
         #expect(plan.payrollInterval == 14)
-        #expect(plan.federalTaxDeduction == 0.0)
-        #expect(plan.stateTaxDeduction == 0.0)
+        #expect(plan.getTaxWithholding(for: .federal) == 0.0)
+        #expect(plan.getTaxWithholding(for: .state) == 0.0)
+        #expect(plan.withholdings[.federal] == 0.0)
+        #expect(plan.withholdings[.state] == 0.0)
         #expect(plan.payrollStartDate.timeIntervalSinceNow < 60)
     }
 
@@ -31,50 +33,54 @@ struct TaxPaymentPlanTests {
         #expect(plan.payrollInterval == 7)
     }
 
-    @Test func federalTaxDeduction() async throws {
+    @Test func federalTaxWithholding() async throws {
         let plan = TaxPaymentPlan()
 
-        plan.federalTaxDeduction = 500.50
+        plan.setTaxWithholding(for: .federal, amount: 500.50)
 
-        #expect(plan.federalTaxDeduction == 500.50)
+        #expect(plan.getTaxWithholding(for: .federal) == 500.50)
+        #expect(plan.withholdings[.federal] == 500.50)
     }
 
-    @Test func stateTaxDeduction() async throws {
+    @Test func stateTaxWithholding() async throws {
         let plan = TaxPaymentPlan()
 
-        plan.stateTaxDeduction = 125.75
+        plan.setTaxWithholding(for: .state, amount: 125.75)
 
-        #expect(plan.stateTaxDeduction == 125.75)
+        #expect(plan.getTaxWithholding(for: .state) == 125.75)
+        #expect(plan.withholdings[.state] == 125.75)
     }
 
-    @Test func bothTaxDeductions() async throws {
+    @Test func bothTaxWithholdings() async throws {
         let plan = TaxPaymentPlan()
 
-        plan.federalTaxDeduction = 400.00
-        plan.stateTaxDeduction = 100.00
+        plan.setTaxWithholding(for: .federal, amount: 400.00)
+        plan.setTaxWithholding(for: .state, amount: 100.00)
 
-        #expect(plan.federalTaxDeduction == 400.00)
-        #expect(plan.stateTaxDeduction == 100.00)
+        #expect(plan.getTaxWithholding(for: .federal) == 400.00)
+        #expect(plan.getTaxWithholding(for: .state) == 100.00)
+        #expect(plan.withholdings[.federal] == 400.00)
+        #expect(plan.withholdings[.state] == 100.00)
     }
 
     @Test func negativeValues() async throws {
         let plan = TaxPaymentPlan()
 
-        plan.federalTaxDeduction = -50.0
-        plan.stateTaxDeduction = -25.0
+        plan.setTaxWithholding(for: .federal, amount: -50.0)
+        plan.setTaxWithholding(for: .state, amount: -25.0)
 
-        #expect(plan.federalTaxDeduction == -50.0)
-        #expect(plan.stateTaxDeduction == -25.0)
+        #expect(plan.getTaxWithholding(for: .federal) == -50.0)
+        #expect(plan.getTaxWithholding(for: .state) == -25.0)
     }
 
     @Test func largeValues() async throws {
         let plan = TaxPaymentPlan()
 
-        plan.federalTaxDeduction = 10000.99
-        plan.stateTaxDeduction = 5000.01
+        plan.setTaxWithholding(for: .federal, amount: 10000.99)
+        plan.setTaxWithholding(for: .state, amount: 5000.01)
 
-        #expect(plan.federalTaxDeduction == 10000.99)
-        #expect(plan.stateTaxDeduction == 5000.01)
+        #expect(plan.getTaxWithholding(for: .federal) == 10000.99)
+        #expect(plan.getTaxWithholding(for: .state) == 5000.01)
     }
 
     @Test func payrollIntervalBoundaries() async throws {
@@ -88,5 +94,48 @@ struct TaxPaymentPlanTests {
 
         plan.payrollInterval = 365
         #expect(plan.payrollInterval == 365)
+    }
+
+    @Test func taxTypeEnumHandling() async throws {
+        let plan = TaxPaymentPlan()
+
+        plan.setTaxWithholding(for: .federal, amount: 300.0)
+        plan.setTaxWithholding(for: .state, amount: 75.0)
+
+        #expect(plan.getTaxWithholding(for: .federal) == 300.0)
+        #expect(plan.getTaxWithholding(for: .state) == 75.0)
+
+        #expect(plan.withholdings[.federal] == 300.0)
+        #expect(plan.withholdings[.state] == 75.0)
+    }
+
+    @Test func taxTypeDisplayNames() async throws {
+        #expect(TaxType.federal.displayName == "Federal Tax")
+        #expect(TaxType.state.displayName == "State Tax")
+    }
+
+    @Test func withholdingsDictionaryAccess() async throws {
+        let plan = TaxPaymentPlan()
+
+        // Test direct dictionary access
+        plan.withholdings[.federal] = 250.0
+        plan.withholdings[.state] = 60.0
+
+        #expect(plan.withholdings[.federal] == 250.0)
+        #expect(plan.withholdings[.state] == 60.0)
+
+        // Test helper methods still work
+        #expect(plan.getTaxWithholding(for: .federal) == 250.0)
+        #expect(plan.getTaxWithholding(for: .state) == 60.0)
+    }
+
+    @Test func defaultInitialization() async throws {
+        let plan = TaxPaymentPlan()
+
+        // All tax types should be initialized to 0.0
+        for taxType in TaxType.allCases {
+            #expect(plan.withholdings[taxType] == 0.0)
+            #expect(plan.getTaxWithholding(for: taxType) == 0.0)
+        }
     }
 }

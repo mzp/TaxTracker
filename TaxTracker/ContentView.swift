@@ -15,21 +15,34 @@ struct ContentView: View {
     @State private var model: TaxTrackingModel?
 
     var body: some View {
-        VStack {
-            if let model = model {
-                Group {
-                    GroupBox("Payroll") {
-                        PayrollCalendarChart()
+        TabView {
+            VStack {
+                if let model = model {
+                    Group {
+                        GroupBox("Payroll") {
+                            PayrollCalendarChart()
+                        }
+                        GroupBox("Tax Payment") {
+                            TaxPaymentChart(taxType: .federal)
+                            TaxPaymentChart(taxType: .state)
+                        }
+                        PlanningForm()
                     }
-                    GroupBox("Tax Payment") {
-                        TaxPaymentChart(taxType: .federal)
-                        TaxPaymentChart(taxType: .state)
-                    }
-                    PlanningForm()
+                    .environment(model)
                 }
-                .environment(model)
             }
-        }.onAppear {
+            .tabItem {
+                Image(systemName: "chart.bar")
+                Text("Dashboard")
+            }
+
+            TaxAdviceView()
+                .tabItem {
+                    Image(systemName: "sparkles")
+                    Text("AI Advice")
+                }
+        }
+        .onAppear {
             loadModel()
         }
     }

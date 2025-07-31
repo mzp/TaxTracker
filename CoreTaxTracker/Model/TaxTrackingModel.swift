@@ -24,8 +24,8 @@ public class TaxTrackingModel {
 
     public var safeHarborAmount: [TaxType: Double] {
         [
-            .federal: 1.2 * (paymentPlan.previousYearTaxPayments[.federal] ?? 0),
-            .state: 1.2 * (paymentPlan.previousYearTaxPayments[.state] ?? 0),
+            .federal: 1.1 * (paymentPlan.previousYearTaxPayments[.federal] ?? 0),
+            .state: 1.1 * (paymentPlan.previousYearTaxPayments[.state] ?? 0),
         ]
     }
 

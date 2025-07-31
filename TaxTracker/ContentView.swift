@@ -26,7 +26,9 @@ struct ContentView: View {
                             TaxPaymentChart(taxType: .federal)
                             TaxPaymentChart(taxType: .state)
                         }
-                        PlanningForm()
+                        GroupBox("Planning") {
+                            PlanningForm()
+                        }
                     }
                     .environment(model)
                 }
@@ -41,6 +43,15 @@ struct ContentView: View {
                     Image(systemName: "sparkles")
                     Text("AI Advice")
                 }
+
+            if let model = model {
+                PayslipImportView()
+                    .environment(model)
+                    .tabItem {
+                        Image(systemName: "doc.badge.plus")
+                        Text("Import")
+                    }
+            }
         }
         .onAppear {
             loadModel()

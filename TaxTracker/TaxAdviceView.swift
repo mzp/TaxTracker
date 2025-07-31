@@ -82,7 +82,7 @@ struct TaxAdviceView: View {
                             }
                             .padding(.horizontal)
                         }
-                        .onChange(of: messages.count) { _ in
+                        .onChange(of: messages.count) {
                             if let lastMessage = messages.last {
                                 withAnimation(.easeInOut(duration: 0.5)) {
                                     proxy.scrollTo(lastMessage.id, anchor: .bottom)

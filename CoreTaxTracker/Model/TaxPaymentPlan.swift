@@ -9,6 +9,7 @@ import Foundation
 import SwiftData
 import SwiftUI
 
+/// User preferences for tax payment plan for this year
 @Model
 public class TaxPaymentPlan {
     // MARK: - Payroll

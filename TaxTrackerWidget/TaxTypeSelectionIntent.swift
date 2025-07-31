@@ -10,8 +10,8 @@ import CoreTaxTracker
 import Foundation
 
 struct TaxTypeSelectionIntent: WidgetConfigurationIntent {
-    static var title: LocalizedStringResource = "Select Tax Type"
-    static var description = IntentDescription("Choose which tax type to display in the widget")
+    static let title: LocalizedStringResource = "Select Tax Type"
+    static let description = IntentDescription("Choose which tax type to display in the widget")
 
     @Parameter(title: "Tax Type", default: .federal)
     var taxType: TaxTypeAppEnum

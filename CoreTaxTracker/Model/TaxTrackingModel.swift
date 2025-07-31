@@ -12,6 +12,7 @@ import SwiftUI
 @Model
 public class TaxTrackingModel {
     @Relationship public var paymentPlan: TaxPaymentPlan
+    @Relationship public var receipt: TaxPaymentReceipt?
 
     // MARK: - Planning
 
@@ -39,6 +40,8 @@ public class TaxTrackingModel {
 
     public func payment(for taxType: TaxType) -> TaxPaymentSnapshot {
         let now = Date()
+
+        let payrollYTD = receipt?.payrollWithholdingTaxYTD[taxType] ?? 0
         let payrollCount = payrollCalendar.payrollDates.count(where: { $0 > now })
         let payrollWithholdings = (paymentPlan.withholdings[taxType] ?? 0) * Double(payrollCount)
 
@@ -54,6 +57,7 @@ public class TaxTrackingModel {
         let safeHarborAmount = 1.1 * (paymentPlan.previousYearTaxPayments[taxType] ?? 0)
         return TaxPaymentSnapshot(
             amounts: [
+                Amount(label: "Payroll YTD", amount: payrollYTD),
                 Amount(label: "Payroll Withholding", amount: payrollWithholdings),
                 Amount(label: "RSU Withholding", amount: rsuWithholdings),
             ],

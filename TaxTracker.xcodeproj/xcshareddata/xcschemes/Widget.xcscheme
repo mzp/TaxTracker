@@ -36,6 +36,20 @@
                ReferencedContainer = "container:TaxTracker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "13B6C7912E3ABE40002062A5"
+               BuildableName = "CoreTaxTracker.framework"
+               BlueprintName = "CoreTaxTracker"
+               ReferencedContainer = "container:TaxTracker.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -45,7 +59,8 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:Project/TestPlan.xctestplan">
+            reference = "container:Project/TestPlan.xctestplan"
+            default = "YES">
          </TestPlanReference>
       </TestPlans>
    </TestAction>
@@ -62,8 +77,18 @@
       allowLocationSimulation = "YES"
       internalIOSLaunchStyle = "2"
       launchAutomaticallySubstyle = "2">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.springboard">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "135E6B4E2E3AC3630072EB83"
+            BuildableName = "TaxTrackerWidgetExtension.appex"
+            BlueprintName = "TaxTrackerWidgetExtension"
+            ReferencedContainer = "container:TaxTracker.xcodeproj">
+         </BuildableReference>
+      </RemoteRunnable>
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B6C7382E3ABBAC002062A5"
@@ -71,7 +96,7 @@
             BlueprintName = "TaxTracker"
             ReferencedContainer = "container:TaxTracker.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "_XCWidgetKind"

@@ -6,6 +6,7 @@
 //
 
 import CoreTaxTracker
+import SwiftData
 import SwiftUI
 import WidgetKit
 
@@ -45,10 +46,26 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct TaxTrackerWidgetEntryView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var savedModels: [TaxTrackingModel]
+    @State private var model: TaxTrackingModel?
+
     var entry: Provider.Entry
     var body: some View {
-        TaxTrackingModelContainer { model, _ in
-            PayrollCalendarChart(model: model)
+        Group {
+            if let model = model {
+                PayrollCalendarChart()
+                    .environment(model)
+            }
+        }
+        .onAppear {
+            loadModel()
+        }
+    }
+
+    private func loadModel() {
+        if let savedModel = savedModels.first {
+            model = savedModel
         }
     }
 }
@@ -58,14 +75,9 @@ struct TaxTrackerWidget: Widget {
 
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            if #available(iOS 17.0, *) {
-                TaxTrackerWidgetEntryView(entry: entry)
-                    .containerBackground(.fill.tertiary, for: .widget)
-            } else {
-                TaxTrackerWidgetEntryView(entry: entry)
-                    .padding()
-                    .background()
-            }
+            TaxTrackerWidgetEntryView(entry: entry)
+                .modelContainer(for: [TaxTrackingModel.self, TaxPaymentPlan.self])
+                .containerBackground(.fill.tertiary, for: .widget)
         }
         .configurationDisplayName("Payroll calendar")
         .description("Widget for payroll date")

@@ -10,7 +10,7 @@
 		135E6B522E3AC3640072EB83 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135E6B512E3AC3630072EB83 /* WidgetKit.framework */; };
 		135E6B542E3AC3640072EB83 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 135E6B532E3AC3640072EB83 /* SwiftUI.framework */; };
 		135E6B5F2E3AC3640072EB83 /* TaxTrackerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 135E6B4F2E3AC3630072EB83 /* TaxTrackerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		135E6BEC2E3ACAB30072EB83 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = 135E6BEB2E3ACAB30072EB83 /* TestPlan.xctestplan */; };
+		139152F02E3AF14E008D7FE8 /* CLAUDE.md in Resources */ = {isa = PBXBuildFile; fileRef = 139152EF2E3AF14E008D7FE8 /* CLAUDE.md */; };
 		13B6C78C2E3ABDB8002062A5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 13B6C78B2E3ABDB8002062A5 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -49,7 +49,7 @@
 		135E6B4F2E3AC3630072EB83 /* TaxTrackerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaxTrackerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		135E6B512E3AC3630072EB83 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		135E6B532E3AC3640072EB83 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		135E6BEB2E3ACAB30072EB83 /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = TestPlan.xctestplan; path = Project/TestPlan.xctestplan; sourceTree = "<group>"; };
+		139152EF2E3AF14E008D7FE8 /* CLAUDE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CLAUDE.md; sourceTree = "<group>"; };
 		13B6C7892E3ABCAE002062A5 /* TaxTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TaxTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B6C78B2E3ABDB8002062A5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		13B6C7922E3ABE40002062A5 /* CoreTaxTracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CoreTaxTracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -143,7 +143,7 @@
 		13B6C7302E3ABBAC002062A5 = {
 			isa = PBXGroup;
 			children = (
-				135E6BEB2E3ACAB30072EB83 /* TestPlan.xctestplan */,
+				139152EF2E3AF14E008D7FE8 /* CLAUDE.md */,
 				13B6C78B2E3ABDB8002062A5 /* README.md */,
 				13B6C77B2E3ABC9B002062A5 /* Project */,
 				13B6C73B2E3ABBAC002062A5 /* TaxTracker */,
@@ -331,8 +331,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				139152F02E3AF14E008D7FE8 /* CLAUDE.md in Resources */,
 				13B6C78C2E3ABDB8002062A5 /* README.md in Resources */,
-				135E6BEC2E3ACAB30072EB83 /* TestPlan.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,7 +402,6 @@
 			baseConfigurationReferenceAnchor = 13B6C77B2E3ABC9B002062A5 /* Project */;
 			baseConfigurationReferenceRelativePath = BuildConfig/TaxTrackerWidget.xcconfig;
 			buildSettings = {
-				DEVELOPMENT_TEAM = VG2YYSKSHY;
 			};
 			name = Debug;
 		};
@@ -411,7 +410,6 @@
 			baseConfigurationReferenceAnchor = 13B6C77B2E3ABC9B002062A5 /* Project */;
 			baseConfigurationReferenceRelativePath = BuildConfig/TaxTrackerWidget.xcconfig;
 			buildSettings = {
-				DEVELOPMENT_TEAM = VG2YYSKSHY;
 			};
 			name = Release;
 		};
@@ -436,7 +434,6 @@
 			baseConfigurationReferenceAnchor = 13B6C77B2E3ABC9B002062A5 /* Project */;
 			baseConfigurationReferenceRelativePath = BuildConfig/TaxTracker.xcconfig;
 			buildSettings = {
-				DEVELOPMENT_TEAM = VG2YYSKSHY;
 			};
 			name = Debug;
 		};
@@ -445,7 +442,6 @@
 			baseConfigurationReferenceAnchor = 13B6C77B2E3ABC9B002062A5 /* Project */;
 			baseConfigurationReferenceRelativePath = BuildConfig/TaxTracker.xcconfig;
 			buildSettings = {
-				DEVELOPMENT_TEAM = VG2YYSKSHY;
 			};
 			name = Release;
 		};

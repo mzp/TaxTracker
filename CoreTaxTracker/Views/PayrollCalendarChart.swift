@@ -8,18 +8,17 @@
 import SwiftUI
 
 public struct PayrollCalendarChart: View {
-    public var model: TaxTrackingModel
-
-    public init(model: TaxTrackingModel) {
-        self.model = model
-    }
-
+    @Environment(TaxTrackingModel.self) public var model
+    public init() {}
     public var body: some View {
-        GroupBox("Payroll Calendar") {
+        LabeledContent("Next pay") {
             if let date = nextPayday {
-                LabeledContent("Next pay") {
+                VStack(alignment: .center) {
                     Text("\(date, style: .date)").font(.title)
+                    Text("\(date, style: .offset)")
                 }
+            } else {
+                Text("-").font(.title)
             }
         }
     }
@@ -31,5 +30,7 @@ public struct PayrollCalendarChart: View {
 }
 
 #Preview {
-    PayrollCalendarChart(model: TaxTrackingModel())
+    PayrollCalendarChart()
+        .environment(TaxTrackingModel())
+        .padding()
 }

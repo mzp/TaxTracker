@@ -1,3 +1,7 @@
 #include "Includes/App.xcconfig"
 
 OTHER_LDFLAGS = $(inherited) -framework CoreTaxTracker
+
+REGISTER_APP_GROUPS = YES
+
+CODE_SIGN_ENTITLEMENTS = TaxTracker/TaxTracker.entitlements

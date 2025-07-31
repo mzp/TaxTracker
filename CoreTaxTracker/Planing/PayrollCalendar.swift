@@ -8,15 +8,15 @@
 import Foundation
 
 public final class PayrollCalendar: Sendable {
-    public static let current = PayrollCalendar(year: 2025, month: 1, day: 3, interval: 14)
-
-    private let startDate: Date
+    public let startDate: Date
     private let endDate: Date
-    private let interval: Int
+    public let interval: Int
 
-    public init(year: Int, month: Int, day: Int, interval: Int) {
+    public init(startDate: Date, interval: Int) {
         let calendar = Calendar.current
-        startDate = calendar.date(from: DateComponents(year: year, month: month, day: day))!
+        self.startDate = startDate
+
+        let year = calendar.component(.year, from: startDate)
         endDate = calendar.date(from: DateComponents(year: year, month: 12, day: 31))!
         self.interval = interval
     }

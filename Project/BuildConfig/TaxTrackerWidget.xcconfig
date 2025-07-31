@@ -1,3 +1,7 @@
 #include "Includes/Widget.xcconfig"
 
 OTHER_LDFLAGS = $(inherited) -framework CoreTaxTracker
+
+REGISTER_APP_GROUPS = YES
+
+CODE_SIGN_ENTITLEMENTS = TaxTrackerWidget/TaxTrackerWidgetExtension.entitlements

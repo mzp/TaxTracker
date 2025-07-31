@@ -5,18 +5,33 @@
 //  Created by mzp on 2025/07/30.
 //
 
+import Combine
 import Foundation
 import SwiftData
 import SwiftUI
 
 @Model
+public class TaxPaymentPlan {
+    // MARK: - Payroll
+
+    public var payrollStartDate: Date = Date()
+    public var payrollInterval: Int = 14
+
+    public init() {}
+}
+
+@Model
 public class TaxTrackingModel {
     // MARK: - Planning
 
+    @Relationship public var paymentPlan: TaxPaymentPlan
+
     @Transient
     public var payrollCalendar: PayrollCalendar {
-        PayrollCalendar.current
+        .init(startDate: paymentPlan.payrollStartDate, interval: paymentPlan.payrollInterval)
     }
 
-    public init() {}
+    public init() {
+        paymentPlan = .init()
+    }
 }

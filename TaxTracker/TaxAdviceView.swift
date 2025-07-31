@@ -208,6 +208,15 @@ struct TaxAdviceView: View {
         let stateSafeHarbor = model.safeHarborAmount[.state] ?? 0
         let payrollInterval = model.paymentPlan.payrollInterval
 
+        let currentYear = Calendar.current.component(.year, from: Date())
+        let vestingInfo = model.paymentPlan.vestingSchedule
+            .filter { Calendar.current.component(.year, from: $0.date) == currentYear }
+            .map { event in
+                "\(DateFormatter.shortDate.string(from: event.date)): \(event.shares) shares"
+            }.joined(separator: ", ")
+
+        let stockPrice = model.paymentPlan.stockPrice
+
         return """
         Look at my tax setup and give me a quick take. Be casual and brief - 1-2 sentences max. Respond in Japanese.
 
@@ -217,6 +226,8 @@ struct TaxAdviceView: View {
         - Last year state: $\(String(format: "%.2f", statePrevious))
         - Safe harbor federal: $\(String(format: "%.2f", federalSafeHarbor))
         - Safe harbor state: $\(String(format: "%.2f", stateSafeHarbor))
+        - Stock price: $\(String(format: "%.2f", stockPrice))
+        - This year's vesting: \(vestingInfo.isEmpty ? "None" : vestingInfo)
 
         Quick assessment - how's it looking?
         """
@@ -237,6 +248,15 @@ struct TaxAdviceView: View {
             "\(message.isUser ? "User" : "Assistant"): \(message.content)"
         }.joined(separator: "\n")
 
+        let currentYear = Calendar.current.component(.year, from: Date())
+        let vestingInfo = model.paymentPlan.vestingSchedule
+            .filter { Calendar.current.component(.year, from: $0.date) == currentYear }
+            .map { event in
+                "\(DateFormatter.shortDate.string(from: event.date)): \(event.shares) shares"
+            }.joined(separator: ", ")
+
+        let stockPrice = model.paymentPlan.stockPrice
+
         return """
         Answer tax questions casually and keep it short. Be direct, no fluff. Respond in Japanese.
 
@@ -246,6 +266,8 @@ struct TaxAdviceView: View {
         - Last year federal: $\(String(format: "%.2f", federalPrevious))
         - Last year state: $\(String(format: "%.2f", statePrevious))
         - Safe harbor: Federal $\(String(format: "%.2f", federalSafeHarbor)), State $\(String(format: "%.2f", stateSafeHarbor))
+        - Stock price: $\(String(format: "%.2f", stockPrice))
+        - This year's vesting: \(vestingInfo.isEmpty ? "None" : vestingInfo)
 
         Recent chat:
         \(conversationHistory)
@@ -401,6 +423,12 @@ extension DateFormatter {
     static let chatTime: DateFormatter = {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
+        return formatter
+    }()
+
+    static let shortDate: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
         return formatter
     }()
 }

@@ -21,11 +21,18 @@ public class TaxPaymentPlan {
 
     public var previousYearTaxPayments: [TaxType: Double] = [:]
 
+    public var automaticTaxRates: [TaxType: Double] = [:]
+
+    public var vestingSchedule: [VestingEvent] = []
+
+    public var stockPrice: Double = 0.0
+
     public init() {
         // Initialize with default values
         for taxType in TaxType.allCases {
             withholdings[taxType] = 0.0
             previousYearTaxPayments[taxType] = 0.0
+            automaticTaxRates[taxType] = 0.0
         }
     }
 }

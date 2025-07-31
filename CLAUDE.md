@@ -15,8 +15,11 @@ xcodebuild clean test -scheme TaxTracker
 
 ### Code Formatting
 ```bash
-# Format Swift code before committing
+# Always format Swift code before committing
 swiftformat **/*.swift
+
+# IMPORTANT: Always run swiftformat after making any Swift code changes
+# This ensures consistent code style across the project
 ```
 
 ### Building

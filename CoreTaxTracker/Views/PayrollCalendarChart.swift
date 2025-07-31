@@ -20,10 +20,10 @@ public struct PayrollCalendarChart: View {
         }
         HStack {
             LabeledContent("Federal Tax") {
-                Text("$\(model.paymentPlan.getTaxWithholding(for: .federal), format: .number)").font(.subheadline)
+                Text("$\(model.paymentPlan.withholdings[.federal] ?? 0.0, format: .number)").font(.subheadline)
             }
             LabeledContent("State Tax") {
-                Text("$\(model.paymentPlan.getTaxWithholding(for: .state), format: .number)").font(.subheadline)
+                Text("$\(model.paymentPlan.withholdings[.state] ?? 0.0, format: .number)").font(.subheadline)
             }
         }
     }

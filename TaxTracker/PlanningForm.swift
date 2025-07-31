@@ -15,6 +15,7 @@ struct PlanningForm: View {
     @State var date: Date = .init()
     @State var interval = 0
     @State var taxWithholdings: [TaxType: Double] = [:]
+    @State var previousYearTaxPayments: [TaxType: Double] = [:]
 
     var body: some View {
         Form {
@@ -45,12 +46,35 @@ struct PlanningForm: View {
                             get: { taxWithholdings[taxType] ?? 0.0 },
                             set: { newValue in
                                 taxWithholdings[taxType] = newValue
-                                model.paymentPlan.setTaxWithholding(for: taxType, amount: newValue)
+                                model.paymentPlan.withholdings[taxType] = newValue
                                 save()
                             }
                         ), format: .currency(code: "USD"))
-                            .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
+                        #if os(ios)
+                            .keyboardType(.decimalPad)
+                        #endif
+                    }
+                }
+            }
+
+            Section("Previous Year Tax Payments") {
+                ForEach(TaxType.allCases, id: \.self) { taxType in
+                    HStack {
+                        Text(taxType.displayName)
+                        Spacer()
+                        TextField("$0.00", value: Binding(
+                            get: { previousYearTaxPayments[taxType] ?? 0.0 },
+                            set: { newValue in
+                                previousYearTaxPayments[taxType] = newValue
+                                model.paymentPlan.previousYearTaxPayments[taxType] = newValue
+                                save()
+                            }
+                        ), format: .currency(code: "USD"))
+                            .multilineTextAlignment(.trailing)
+                        #if os(ios)
+                            .keyboardType(.decimalPad)
+                        #endif
                     }
                 }
             }
@@ -58,7 +82,8 @@ struct PlanningForm: View {
             date = model.paymentPlan.payrollStartDate
             interval = model.paymentPlan.payrollInterval
             for taxType in TaxType.allCases {
-                taxWithholdings[taxType] = model.paymentPlan.getTaxWithholding(for: taxType)
+                taxWithholdings[taxType] = model.paymentPlan.withholdings[taxType] ?? 0.0
+                previousYearTaxPayments[taxType] = model.paymentPlan.previousYearTaxPayments[taxType] ?? 0.0
             }
         }
     }

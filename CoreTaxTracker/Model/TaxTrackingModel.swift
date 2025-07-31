@@ -20,13 +20,45 @@ public class TaxTrackingModel {
         .init(startDate: paymentPlan.payrollStartDate, interval: paymentPlan.payrollInterval)
     }
 
-    // MARK: - Safe Harbar Amount
+    // MARK: - Tax Payment Snapshot
 
-    public var safeHarborAmount: [TaxType: Double] {
-        [
-            .federal: 1.1 * (paymentPlan.previousYearTaxPayments[.federal] ?? 0),
-            .state: 1.1 * (paymentPlan.previousYearTaxPayments[.state] ?? 0),
-        ]
+    public struct Amount: Identifiable {
+        public var id: String {
+            label
+        }
+
+        var label: String
+        var amount: Double
+        var realized: Bool = true
+    }
+
+    public struct TaxPaymentSnapshot {
+        public var amounts: [Amount]
+        public var safeHarborAmount: Double
+    }
+
+    public func payment(for taxType: TaxType) -> TaxPaymentSnapshot {
+        let now = Date()
+        let payrollCount = payrollCalendar.payrollDates.count(where: { $0 > now })
+        let payrollWithholdings = (paymentPlan.withholdings[taxType] ?? 0) * Double(payrollCount)
+
+        let stockQuantity: Double = paymentPlan.vestingSchedule.reduce(0.0) { result, schedule in
+            if schedule.date > now {
+                return result + Double(schedule.shares)
+            } else {
+                return result
+            }
+        }
+        let rsuWithholdings = (paymentPlan.automaticTaxRates[taxType] ?? 0) * paymentPlan.stockPrice * stockQuantity
+
+        let safeHarborAmount = 1.1 * (paymentPlan.previousYearTaxPayments[taxType] ?? 0)
+        return TaxPaymentSnapshot(
+            amounts: [
+                Amount(label: "Payroll Withholding", amount: payrollWithholdings),
+                Amount(label: "RSU Withholding", amount: rsuWithholdings),
+            ],
+            safeHarborAmount: safeHarborAmount
+        )
     }
 
     public init() {

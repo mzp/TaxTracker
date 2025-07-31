@@ -204,8 +204,8 @@ struct TaxAdviceView: View {
         let stateWithholding = model.paymentPlan.withholdings[.state] ?? 0
         let federalPrevious = model.paymentPlan.previousYearTaxPayments[.federal] ?? 0
         let statePrevious = model.paymentPlan.previousYearTaxPayments[.state] ?? 0
-        let federalSafeHarbor = model.safeHarborAmount[.federal] ?? 0
-        let stateSafeHarbor = model.safeHarborAmount[.state] ?? 0
+        let federalSafeHarbor = model.payment(for: .federal).safeHarborAmount
+        let stateSafeHarbor = model.payment(for: .state).safeHarborAmount
         let payrollInterval = model.paymentPlan.payrollInterval
 
         let currentYear = Calendar.current.component(.year, from: Date())
@@ -240,8 +240,8 @@ struct TaxAdviceView: View {
         let stateWithholding = model.paymentPlan.withholdings[.state] ?? 0
         let federalPrevious = model.paymentPlan.previousYearTaxPayments[.federal] ?? 0
         let statePrevious = model.paymentPlan.previousYearTaxPayments[.state] ?? 0
-        let federalSafeHarbor = model.safeHarborAmount[.federal] ?? 0
-        let stateSafeHarbor = model.safeHarborAmount[.state] ?? 0
+        let federalSafeHarbor = model.payment(for: .federal).safeHarborAmount
+        let stateSafeHarbor = model.payment(for: .state).safeHarborAmount
         let payrollInterval = model.paymentPlan.payrollInterval
 
         let conversationHistory = messages.suffix(6).map { message in

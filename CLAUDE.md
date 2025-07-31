@@ -7,10 +7,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Testing
 ```bash
 # Run all tests
-xcodebuild clean test -scheme TaxTracker -quiet
+xcodebuild clean test -scheme App -quiet
 
 # Run tests with detailed output  
-xcodebuild clean test -scheme TaxTracker
+xcodebuild clean test -scheme App
 ```
 
 ### Code Formatting

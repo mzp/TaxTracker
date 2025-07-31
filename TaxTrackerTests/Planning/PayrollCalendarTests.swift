@@ -16,9 +16,9 @@ struct PayrollCalendarTests {
     }
 
     @Test func payrollDates() async throws {
-        let current = PayrollCalendar.current
-        #expect(!current.payrollDates.contains(date(2025, 7, 3)))
-        #expect(current.payrollDates.contains(date(2025, 7, 4)))
-        #expect(current.payrollDates.contains(date(2025, 7, 18)))
+        let calendar = PayrollCalendar(startDate: date(2025, 7, 4), interval: 14)
+        #expect(!calendar.payrollDates.contains(date(2025, 7, 3)))
+        #expect(calendar.payrollDates.contains(date(2025, 7, 4)))
+        #expect(calendar.payrollDates.contains(date(2025, 7, 18)))
     }
 }

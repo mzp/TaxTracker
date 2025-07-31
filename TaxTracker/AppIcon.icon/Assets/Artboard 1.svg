@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="a" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000">
+  <defs>
+    <style>
+      .b {
+        font-family: RobotoMono-Regular, 'Roboto Mono';
+        font-size: 800px;
+      }
+    </style>
+  </defs>
+  <text class="b" transform="translate(343.48 782.6)"><tspan x="0" y="0">$</tspan></text>
+</svg>

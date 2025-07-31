@@ -21,6 +21,10 @@ struct ContentView: View {
                     GroupBox("Payroll") {
                         PayrollCalendarChart()
                     }
+                    GroupBox("Tax Payment") {
+                        TaxPaymentChart(taxType: .federal)
+                        TaxPaymentChart(taxType: .state)
+                    }
                     PlanningForm()
                 }
                 .environment(model)

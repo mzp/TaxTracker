@@ -12,5 +12,6 @@ import WidgetKit
 struct TaxTrackerWidgetBundle: WidgetBundle {
     var body: some Widget {
         TaxTrackerWidget()
+        TaxPaymentChartWidget()
     }
 }

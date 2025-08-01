@@ -1,6 +1,6 @@
 import Foundation
 
-public class PayslipAgent: DocumentProcessingAgent {
+public actor PayslipAgent: DocumentProcessingAgent {
     private let payslipReader: PayslipReader
 
     public init() {

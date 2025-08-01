@@ -10,7 +10,7 @@ import SwiftUI
 
 struct PlanningForm: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(TaxTrackingModel.self) var model
+    @Query private var savedModels: [TaxTrackingModel]
 
     @State var date: Date = .init()
     @State var interval = 0
@@ -18,6 +18,17 @@ struct PlanningForm: View {
     @State var previousYearTaxPayments: [TaxType: Double] = [:]
     @State var automaticTaxRates: [TaxType: Double] = [:]
     @State var stockPrice: Double = 0.0
+
+    private var model: TaxTrackingModel {
+        if let existingModel = savedModels.first {
+            return existingModel
+        } else {
+            let newModel = TaxTrackingModel()
+            modelContext.insert(newModel)
+            try? modelContext.save()
+            return newModel
+        }
+    }
 
     var body: some View {
         @Bindable var model = model

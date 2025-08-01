@@ -3,7 +3,7 @@ import FoundationModels
 import OSLog
 import PDFKit
 
-public class PayslipReader {
+public actor PayslipReader {
     private let logger = Logger(subsystem: "CoreTaxTracker", category: "PayslipReader")
     private var languageModelSession: LanguageModelSession?
 

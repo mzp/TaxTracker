@@ -1,7 +1,7 @@
 import Foundation
 
 /// Common protocol for agents that process documents and update tax tracking models
-public protocol DocumentProcessingAgent {
+public protocol DocumentProcessingAgent: Actor {
     /// Process a document from the given URL and update the tracking model
     /// - Parameters:
     ///   - url: The URL of the document to process

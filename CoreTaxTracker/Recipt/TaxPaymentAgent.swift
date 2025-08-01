@@ -6,7 +6,7 @@ public enum TaxPaymentAgentError: Error {
     case modelNotFound
 }
 
-public class TaxPaymentAgent: DocumentProcessingAgent {
+public actor TaxPaymentAgent: DocumentProcessingAgent {
     public init() {}
 
     public func processDocument(from url: URL, for trackingModel: TaxTrackingModel) async throws {

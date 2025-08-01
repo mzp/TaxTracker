@@ -51,11 +51,22 @@ enum DocumentType: String, CaseIterable {
 
 struct DocumentImportView: View {
     @Environment(\.modelContext) private var modelContext
-    @Environment(TaxTrackingModel.self) private var trackingModel
+    @Query private var savedModels: [TaxTrackingModel]
 
     @State private var isImporting = false
     @State private var importResult: ImportResult?
     @State private var isFilePickerPresented = false
+
+    private var trackingModel: TaxTrackingModel {
+        if let existingModel = savedModels.first {
+            return existingModel
+        } else {
+            let newModel = TaxTrackingModel()
+            modelContext.insert(newModel)
+            try? modelContext.save()
+            return newModel
+        }
+    }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -214,17 +225,21 @@ struct DocumentImportView: View {
                     throw error
                 }
 
-                // Save the receipt to SwiftData
-                if let receipt = trackingModel.receipt {
-                    modelContext.insert(receipt)
-                }
-
-                // Save all changes including TaxPaymentPlan withholdings updates
-                try modelContext.save()
-
+                // Save the receipt to SwiftData on MainActor
                 await MainActor.run {
-                    isImporting = false
-                    importResult = .success
+                    if let receipt = trackingModel.receipt {
+                        modelContext.insert(receipt)
+                    }
+
+                    // Save all changes including TaxPaymentPlan withholdings updates
+                    do {
+                        try modelContext.save()
+                        isImporting = false
+                        importResult = .success
+                    } catch {
+                        isImporting = false
+                        importResult = .error("Failed to save: \(error.localizedDescription)")
+                    }
                 }
             } catch {
                 await MainActor.run {

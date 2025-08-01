@@ -2,7 +2,7 @@ import Foundation
 import FoundationModels
 
 @Generable
-public struct PayslipData {
+public struct PayslipData: Sendable {
     @Guide(description: "The year-to-date federal withholding tax amount (the larger amount when two amounts are shown for federal tax)")
     public let federalTaxYTD: Double
 

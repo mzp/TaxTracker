@@ -21,7 +21,7 @@ public struct TaxPaymentChart: View {
             ForEach(snapshot.amounts) { amount in
                 BarMark(
                     x: .value("Amount", amount.amount),
-                    y: .value("Kind", "Paid + Estimate")
+                    y: .value("Kind", taxType.displayName)
                 ).cornerRadius(6.0)
                     .opacity(amount.realized ? 1.0 : 0.2)
                     .foregroundStyle(by: .value("Category", amount.label))
@@ -33,12 +33,12 @@ public struct TaxPaymentChart: View {
             }
             AxisMarks(values: [safeHarborAmount]) { _ in
                 AxisGridLine().foregroundStyle(.green)
-                AxisValueLabel(format: .currency(code: "USD")).offset(x: -40)
+                AxisValueLabel(format: .currency(code: "USD")).offset(x: -50)
             }
         }
-        .chartXScale(domain: 0 ... (safeHarborAmount * 1.2))
+        .chartXScale(domain: 0 ... (safeHarborAmount * 1.1))
         .chartLegend(position: .bottom)
-        .frame(height: 150)
+        .frame(height: 100)
     }
 
     private var snapshot: TaxTrackingModel.TaxPaymentSnapshot {

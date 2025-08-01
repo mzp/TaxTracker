@@ -42,6 +42,8 @@ public class TaxTrackingModel {
         let now = Date()
 
         let payrollYTD = receipt?.payrollWithholdingTaxYTD[taxType] ?? 0
+        let estimateTaxYTD = receipt?.estimateTax[taxType] ?? 0
+
         let payrollCount = payrollCalendar.payrollDates.count(where: { $0 > now })
         let payrollWithholdings = (paymentPlan.withholdings[taxType] ?? 0) * Double(payrollCount)
 
@@ -58,6 +60,7 @@ public class TaxTrackingModel {
         return TaxPaymentSnapshot(
             amounts: [
                 Amount(label: "Payroll YTD", amount: payrollYTD),
+                Amount(label: "EstimateTax YTD", amount: estimateTaxYTD),
                 Amount(label: "Payroll Withholding", amount: payrollWithholdings),
                 Amount(label: "RSU Withholding", amount: rsuWithholdings),
             ],

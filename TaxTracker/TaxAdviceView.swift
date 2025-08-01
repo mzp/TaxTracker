@@ -20,7 +20,7 @@ struct ChatMessage: Identifiable {
 
 struct TaxAdviceView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var models: [TaxTrackingModel]
+    @Query private var savedModels: [TaxTrackingModel]
 
     @State private var messages: [ChatMessage] = []
     @State private var currentInput: String = ""
@@ -30,92 +30,84 @@ struct TaxAdviceView: View {
 
     private let logger = Logger(subsystem: "com.taxtracker.app", category: "TaxAdviceView")
 
-    private var taxModel: TaxTrackingModel? {
-        models.first
+    private var taxModel: TaxTrackingModel {
+        if let existingModel = savedModels.first {
+            return existingModel
+        } else {
+            let newModel = TaxTrackingModel()
+            modelContext.insert(newModel)
+            try? modelContext.save()
+            return newModel
+        }
     }
 
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                if let model = taxModel {
-                    TaxSummaryCard(model: model)
-                        .padding()
+                TaxSummaryCard(model: taxModel)
+                    .padding()
 
-                    ScrollViewReader { proxy in
-                        ScrollView {
-                            LazyVStack(alignment: .leading, spacing: 12) {
-                                if messages.isEmpty {
-                                    VStack(spacing: 16) {
-                                        Image(systemName: "sparkles")
-                                            .font(.system(size: 48))
-                                            .foregroundColor(.accentColor)
-                                        Text("Tax AI Assistant")
-                                            .font(.title2)
-                                            .fontWeight(.semibold)
-                                        Text("Ask me anything about your taxes")
-                                            .foregroundColor(.secondary)
-                                            .multilineTextAlignment(.center)
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        LazyVStack(alignment: .leading, spacing: 12) {
+                            if messages.isEmpty {
+                                VStack(spacing: 16) {
+                                    Image(systemName: "sparkles")
+                                        .font(.system(size: 48))
+                                        .foregroundColor(.accentColor)
+                                    Text("Tax AI Assistant")
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
+                                    Text("Ask me anything about your taxes")
+                                        .foregroundColor(.secondary)
+                                        .multilineTextAlignment(.center)
 
-                                        Button("Analyze My Tax Situation") {
-                                            startInitialAnalysis()
-                                        }
-                                        .buttonStyle(.borderedProminent)
+                                    Button("Analyze My Tax Situation") {
+                                        startInitialAnalysis()
                                     }
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.top, 60)
+                                    .buttonStyle(.borderedProminent)
                                 }
-
-                                ForEach(messages) { message in
-                                    ChatBubble(message: message)
-                                        .id(message.id)
-                                }
-
-                                if isGenerating {
-                                    HStack {
-                                        ProgressView()
-                                            .scaleEffect(0.8)
-                                        Text("Thinking...")
-                                            .foregroundColor(.secondary)
-                                    }
-                                    .padding(.leading)
-                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.top, 60)
                             }
-                            .padding(.horizontal)
-                        }
-                        .onChange(of: messages.count) {
-                            if let lastMessage = messages.last {
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    proxy.scrollTo(lastMessage.id, anchor: .bottom)
+
+                            ForEach(messages) { message in
+                                ChatBubble(message: message)
+                                    .id(message.id)
+                            }
+
+                            if isGenerating {
+                                HStack {
+                                    ProgressView()
+                                        .scaleEffect(0.8)
+                                    Text("Thinking...")
+                                        .foregroundColor(.secondary)
                                 }
+                                .padding(.leading)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    .onChange(of: messages.count) {
+                        if let lastMessage = messages.last {
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                proxy.scrollTo(lastMessage.id, anchor: .bottom)
                             }
                         }
                     }
+                }
 
-                    ChatInputView(
-                        text: $currentInput,
-                        isGenerating: isGenerating,
-                        onSend: { sendMessage() }
-                    )
+                ChatInputView(
+                    text: $currentInput,
+                    isGenerating: isGenerating,
+                    onSend: { sendMessage() }
+                )
 
-                    if let error = errorMessage {
-                        Text(error)
-                            .foregroundColor(.red)
-                            .font(.caption)
-                            .padding(.horizontal)
-                    }
-                } else {
-                    VStack(spacing: 16) {
-                        Image(systemName: "exclamationmark.triangle")
-                            .font(.system(size: 48))
-                            .foregroundColor(.orange)
-                        Text("No Tax Data Available")
-                            .font(.title2)
-                            .fontWeight(.semibold)
-                        Text("Please set up your tax payment plan first")
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                    }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                if let error = errorMessage {
+                    Text(error)
+                        .foregroundColor(.red)
+                        .font(.caption)
+                        .padding(.horizontal)
                 }
             }
             .navigationTitle("Tax AI Chat")
@@ -132,8 +124,7 @@ struct TaxAdviceView: View {
     }
 
     private func startInitialAnalysis() {
-        guard let model = taxModel else { return }
-        let analysisPrompt = buildInitialAnalysisPrompt(for: model)
+        let analysisPrompt = buildInitialAnalysisPrompt(for: taxModel)
         sendMessage(analysisPrompt)
     }
 
@@ -234,7 +225,7 @@ struct TaxAdviceView: View {
     }
 
     private func buildContextualPrompt(userMessage: String) -> String {
-        guard let model = taxModel else { return userMessage }
+        let model = taxModel
 
         let federalWithholding = model.paymentPlan.withholdings[.federal] ?? 0
         let stateWithholding = model.paymentPlan.withholdings[.state] ?? 0
@@ -434,17 +425,5 @@ extension DateFormatter {
 }
 
 #Preview {
-    let config = ModelConfiguration(isStoredInMemoryOnly: true)
-    let container = try! ModelContainer(for: TaxTrackingModel.self, configurations: config)
-
-    let model = TaxTrackingModel()
-    model.paymentPlan.withholdings[.federal] = 500.0
-    model.paymentPlan.withholdings[.state] = 150.0
-    model.paymentPlan.previousYearTaxPayments[.federal] = 8000.0
-    model.paymentPlan.previousYearTaxPayments[.state] = 2000.0
-
-    container.mainContext.insert(model)
-
-    return TaxAdviceView()
-        .modelContainer(container)
+    TaxAdviceView()
 }

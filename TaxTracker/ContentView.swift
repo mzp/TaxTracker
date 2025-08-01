@@ -10,33 +10,19 @@ import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var savedModels: [TaxTrackingModel]
-    @State private var model: TaxTrackingModel?
-
     var body: some View {
         TabView {
-            VStack {
-                if let model = model {
-                    Group {
-                        GroupBox("Payroll") {
-                            PayrollCalendarChart()
-                        }
-                        GroupBox("Tax Payment") {
-                            TaxPaymentChart(taxType: .federal)
-                            TaxPaymentChart(taxType: .state)
-                        }
-                        GroupBox("Planning") {
-                            PlanningForm()
-                        }
-                    }
-                    .environment(model)
+            DashboardView()
+                .tabItem {
+                    Image(systemName: "chart.bar")
+                    Text("Dashboard")
                 }
-            }
-            .tabItem {
-                Image(systemName: "chart.bar")
-                Text("Dashboard")
-            }
+
+            PlanningForm()
+                .tabItem {
+                    Image(systemName: "calendar")
+                    Text("Planning")
+                }
 
             TaxAdviceView()
                 .tabItem {
@@ -44,27 +30,11 @@ struct ContentView: View {
                     Text("AI Advice")
                 }
 
-            if let model = model {
-                DocumentImportView()
-                    .environment(model)
-                    .tabItem {
-                        Image(systemName: "doc.badge.plus")
-                        Text("Import")
-                    }
-            }
-        }
-        .onAppear {
-            loadModel()
-        }
-    }
-
-    private func loadModel() {
-        if let savedModel = savedModels.first {
-            model = savedModel
-        } else {
-            let model = TaxTrackingModel()
-            modelContext.insert(model)
-            self.model = model
+            DocumentImportView()
+                .tabItem {
+                    Image(systemName: "doc.badge.plus")
+                    Text("Import")
+                }
         }
     }
 }

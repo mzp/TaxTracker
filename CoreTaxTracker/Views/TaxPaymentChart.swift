@@ -31,6 +31,9 @@ public struct TaxPaymentChart: View {
             AxisMarks(values: gridValues) { _ in
                 AxisGridLine()
             }
+            AxisMarks(values: [snapshot.liabilityAmount]) { _ in
+                AxisGridLine().foregroundStyle(.yellow)
+            }
             AxisMarks(values: [safeHarborAmount]) { _ in
                 AxisGridLine().foregroundStyle(.green)
                 AxisValueLabel(format: .currency(code: "USD")).offset(x: -50)

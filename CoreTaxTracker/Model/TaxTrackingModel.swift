@@ -35,6 +35,7 @@ public class TaxTrackingModel {
 
     public struct TaxPaymentSnapshot {
         public var amounts: [Amount]
+        public var liabilityAmount: Double
         public var safeHarborAmount: Double
     }
 
@@ -56,6 +57,11 @@ public class TaxTrackingModel {
         }
         let rsuWithholdings = (paymentPlan.automaticTaxRates[taxType] ?? 0) * paymentPlan.stockPrice * stockQuantity
 
+        let calculator = TaxCalculator(taxType: taxType)
+        let grossIncome = (receipt?.salaryYTD ?? 0) +
+            (receipt?.rsuYTD ?? 0) +
+            (paymentPlan.stockPrice * stockQuantity)
+        let liabilityAmount: Double = calculator.calculateTax(grossIncome: grossIncome)
         let safeHarborAmount = 1.1 * (paymentPlan.previousYearTaxPayments[taxType] ?? 0)
         return TaxPaymentSnapshot(
             amounts: [
@@ -64,6 +70,7 @@ public class TaxTrackingModel {
                 Amount(label: "Payroll Withholding", amount: payrollWithholdings),
                 Amount(label: "RSU Withholding", amount: rsuWithholdings),
             ],
+            liabilityAmount: liabilityAmount,
             safeHarborAmount: safeHarborAmount
         )
     }

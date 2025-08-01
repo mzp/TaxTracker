@@ -45,7 +45,7 @@ struct ContentView: View {
                 }
 
             if let model = model {
-                PayslipImportView()
+                DocumentImportView()
                     .environment(model)
                     .tabItem {
                         Image(systemName: "doc.badge.plus")

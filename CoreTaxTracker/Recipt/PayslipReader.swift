@@ -42,13 +42,23 @@ public actor PayslipReader {
         2. Year-to-Date (YTD) state withholding tax amount  
         3. Current pay period federal withholding tax amount
         4. Current pay period state withholding tax amount
-        5. Check date
+        5. Year-to-Date (YTD) salary amount
+        6. Year-to-Date (YTD) RSU amount
+        7. Check date
 
         For tax amounts, look in the tax deductions section:
         - "Federal Withholding Tax" followed by two amounts - take the SECOND amount (year-to-date total) and FIRST amount (current period)
         - "California Withholding Tax" or similar state tax followed by two amounts - take the SECOND amount (year-to-date total) and FIRST amount (current period)
         - When there are two amounts shown for a tax line, the smaller amount is current period, the larger amount is year-to-date total
         - If you cannot find tax information, return 0 for that value
+
+        For salary amount, look in the earnings section:
+        - Look for "Salary" line with two amounts - take the SECOND amount (year-to-date total)
+        - The format is typically "Salary [current amount] [year-to-date amount]"
+
+        For RSU amount, look in the benefits/information section:
+        - Look for "RSU Vesting" followed by an amount - this is the year-to-date RSU amount
+        - If you cannot find RSU information, return 0
 
         For check date, look for "Check Date:" followed by the date. Format the date as MM-DD-YYYY.
 

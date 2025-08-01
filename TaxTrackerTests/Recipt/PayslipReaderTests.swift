@@ -23,6 +23,8 @@ struct PayslipReaderTests {
             #expect(extractedData.federalTaxYTD > 0)
             #expect(extractedData.stateTaxCurrent >= 0) // State tax might be 0 if the state doesn't have income tax
             #expect(extractedData.stateTaxYTD >= 0)
+            #expect(extractedData.salaryYTD >= 0) // Salary should be non-negative
+            #expect(extractedData.rsuYTD >= 0) // RSU might be 0 if not found
 
             let today = date(2025, 7, 18)
             let timeDifference = abs(extractedData.extractionDate.timeIntervalSince(today))
@@ -51,6 +53,8 @@ struct PayslipReaderTests {
     @Test func payslipDataInitialization() {
         let federalTax = 1500.50
         let stateTax = 300.25
+        let salary = 50000.0
+        let rsu = 25000.0
         let checkDateString = "07-18-2025"
 
         let payslipData = PayslipData(
@@ -58,11 +62,15 @@ struct PayslipReaderTests {
             stateTaxYTD: stateTax,
             federalTaxCurrent: 200.0,
             stateTaxCurrent: 50.0,
+            salaryYTD: salary,
+            rsuYTD: rsu,
             checkDate: checkDateString
         )
 
         #expect(payslipData.federalTaxYTD == federalTax)
         #expect(payslipData.stateTaxYTD == stateTax)
+        #expect(payslipData.salaryYTD == salary)
+        #expect(payslipData.rsuYTD == rsu)
         #expect(payslipData.checkDate == checkDateString)
 
         // Test computed extractionDate
@@ -75,6 +83,8 @@ struct PayslipReaderTests {
     @Test func payslipDataInvalidDateFallback() {
         let federalTax = 1000.0
         let stateTax = 200.0
+        let salary = 30000.0
+        let rsu = 15000.0
         let invalidDate = "invalid-date"
 
         let payslipData = PayslipData(
@@ -82,6 +92,8 @@ struct PayslipReaderTests {
             stateTaxYTD: stateTax,
             federalTaxCurrent: 100.0,
             stateTaxCurrent: 20.0,
+            salaryYTD: salary,
+            rsuYTD: rsu,
             checkDate: invalidDate
         )
 

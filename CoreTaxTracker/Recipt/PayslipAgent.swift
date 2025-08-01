@@ -20,6 +20,8 @@ public actor PayslipAgent: DocumentProcessingAgent {
             // Update existing receipt with new payslip data
             existingReceipt.payrollWithholdingTaxYTD[.federal] = payslipData.federalTaxYTD
             existingReceipt.payrollWithholdingTaxYTD[.state] = payslipData.stateTaxYTD
+            existingReceipt.salaryYTD = payslipData.salaryYTD
+            existingReceipt.rsuYTD = payslipData.rsuYTD
             existingReceipt.lastModifiedDate = Date()
             // Keep existing estimateTax values
         } else {
@@ -30,7 +32,9 @@ public actor PayslipAgent: DocumentProcessingAgent {
                     .state: payslipData.stateTaxYTD,
                 ],
                 lastModifiedDate: Date(),
-                estimateTax: [:]
+                estimateTax: [:],
+                salaryYTD: payslipData.salaryYTD,
+                rsuYTD: payslipData.rsuYTD
             )
             trackingModel.receipt = receipt
         }

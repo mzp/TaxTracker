@@ -73,27 +73,27 @@ struct DocumentImportView: View {
             GroupBox("Current Receipt") {
                 if let receipt = trackingModel.receipt {
                     VStack(alignment: .leading, spacing: 8) {
-                        HStack {
-                            Text("Federal Tax YTD:")
-                            Spacer()
+                        LabeledContent("Federal Tax YTD") {
                             Text("$\(receipt.payrollWithholdingTaxYTD[.federal] ?? 0, specifier: "%.2f")")
                                 .fontWeight(.semibold)
                         }
-                        HStack {
-                            Text("State Tax YTD:")
-                            Spacer()
+                        LabeledContent("State Tax YTD") {
                             Text("$\(receipt.payrollWithholdingTaxYTD[.state] ?? 0, specifier: "%.2f")")
                                 .fontWeight(.semibold)
                         }
-                        HStack {
-                            Text("Estimate Tax (Federal):")
-                            Spacer()
+                        LabeledContent("Salary YTD") {
+                            Text("$\(receipt.salaryYTD ?? 0, specifier: "%.2f")")
+                                .fontWeight(.semibold)
+                        }
+                        LabeledContent("RSU YTD") {
+                            Text("$\(receipt.rsuYTD ?? 0, specifier: "%.2f")")
+                                .fontWeight(.semibold)
+                        }
+                        LabeledContent("Estimate Tax (Federal)") {
                             Text("$\(receipt.estimateTax[.federal] ?? 0, specifier: "%.2f")")
                                 .fontWeight(.semibold)
                         }
-                        HStack {
-                            Text("Last Updated:")
-                            Spacer()
+                        LabeledContent("Last Updated") {
                             Text(receipt.lastModifiedDate, style: .date)
                                 .foregroundColor(.secondary)
                         }

@@ -15,6 +15,9 @@ public struct PayslipData: Sendable {
     @Guide(description: "The current pay period state withholding tax amount (the smaller amount when two amounts are shown for state tax)")
     public let stateTaxCurrent: Double
 
+    @Guide(description: "The current pay period salary amount from the earnings section")
+    public let salaryCurrent: Double
+
     @Guide(description: "The year-to-date salary amount from the earnings section")
     public let salaryYTD: Double
 
@@ -30,11 +33,12 @@ public struct PayslipData: Sendable {
         return dateFormatter.date(from: checkDate) ?? Date()
     }
 
-    public init(federalTaxYTD: Double, stateTaxYTD: Double, federalTaxCurrent: Double, stateTaxCurrent: Double, salaryYTD: Double, rsuYTD: Double, checkDate: String) {
+    public init(federalTaxYTD: Double, stateTaxYTD: Double, federalTaxCurrent: Double, stateTaxCurrent: Double, salaryCurrent: Double, salaryYTD: Double, rsuYTD: Double, checkDate: String) {
         self.federalTaxYTD = federalTaxYTD
         self.stateTaxYTD = stateTaxYTD
         self.federalTaxCurrent = federalTaxCurrent
         self.stateTaxCurrent = stateTaxCurrent
+        self.salaryCurrent = salaryCurrent
         self.salaryYTD = salaryYTD
         self.rsuYTD = rsuYTD
         self.checkDate = checkDate

@@ -58,9 +58,18 @@ public class TaxTrackingModel {
         let rsuWithholdings = (paymentPlan.automaticTaxRates[taxType] ?? 0) * paymentPlan.stockPrice * stockQuantity
 
         let calculator = TaxCalculator(taxType: taxType)
-        let grossIncome = (receipt?.salaryYTD ?? 0) +
-            (receipt?.rsuYTD ?? 0) +
-            (paymentPlan.stockPrice * stockQuantity)
+        var grossIncome = 0.0
+        if let salaryYTD = receipt?.salaryYTD {
+            grossIncome += salaryYTD
+        }
+        if let rsuYTD = receipt?.rsuYTD {
+            grossIncome += rsuYTD
+        }
+        if let salaryCurrent = receipt?.salaryCurrent {
+            grossIncome += Double(payrollCount) * salaryCurrent
+        }
+        grossIncome += paymentPlan.stockPrice * stockQuantity
+
         let liabilityAmount: Double = calculator.calculateTax(grossIncome: grossIncome)
         let safeHarborAmount = 1.1 * (paymentPlan.previousYearTaxPayments[taxType] ?? 0)
         return TaxPaymentSnapshot(

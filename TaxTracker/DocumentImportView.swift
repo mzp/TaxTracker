@@ -74,23 +74,27 @@ struct DocumentImportView: View {
                 if let receipt = trackingModel.receipt {
                     VStack(alignment: .leading, spacing: 8) {
                         LabeledContent("Federal Tax YTD") {
-                            Text("$\(receipt.payrollWithholdingTaxYTD[.federal] ?? 0, specifier: "%.2f")")
+                            Text(receipt.payrollWithholdingTaxYTD[.federal] ?? 0, format: .currency(code: "USD"))
                                 .fontWeight(.semibold)
                         }
                         LabeledContent("State Tax YTD") {
-                            Text("$\(receipt.payrollWithholdingTaxYTD[.state] ?? 0, specifier: "%.2f")")
+                            Text(receipt.payrollWithholdingTaxYTD[.state] ?? 0, format: .currency(code: "USD"))
+                                .fontWeight(.semibold)
+                        }
+                        LabeledContent("Salary Current") {
+                            Text(receipt.salaryCurrent ?? 0, format: .currency(code: "USD"))
                                 .fontWeight(.semibold)
                         }
                         LabeledContent("Salary YTD") {
-                            Text("$\(receipt.salaryYTD ?? 0, specifier: "%.2f")")
+                            Text(receipt.salaryYTD ?? 0, format: .currency(code: "USD"))
                                 .fontWeight(.semibold)
                         }
                         LabeledContent("RSU YTD") {
-                            Text("$\(receipt.rsuYTD ?? 0, specifier: "%.2f")")
+                            Text(receipt.rsuYTD ?? 0, format: .currency(code: "USD"))
                                 .fontWeight(.semibold)
                         }
                         LabeledContent("Estimate Tax (Federal)") {
-                            Text("$\(receipt.estimateTax[.federal] ?? 0, specifier: "%.2f")")
+                            Text(receipt.estimateTax[.federal] ?? 0, format: .currency(code: "USD"))
                                 .fontWeight(.semibold)
                         }
                         LabeledContent("Last Updated") {

@@ -42,9 +42,10 @@ public actor PayslipReader {
         2. Year-to-Date (YTD) state withholding tax amount  
         3. Current pay period federal withholding tax amount
         4. Current pay period state withholding tax amount
-        5. Year-to-Date (YTD) salary amount
-        6. Year-to-Date (YTD) RSU amount
-        7. Check date
+        5. Current pay period salary amount
+        6. Year-to-Date (YTD) salary amount
+        7. Year-to-Date (YTD) RSU amount
+        8. Check date
 
         For tax amounts, look in the tax deductions section:
         - "Federal Withholding Tax" followed by two amounts - take the SECOND amount (year-to-date total) and FIRST amount (current period)
@@ -52,9 +53,10 @@ public actor PayslipReader {
         - When there are two amounts shown for a tax line, the smaller amount is current period, the larger amount is year-to-date total
         - If you cannot find tax information, return 0 for that value
 
-        For salary amount, look in the earnings section:
-        - Look for "Salary" line with two amounts - take the SECOND amount (year-to-date total)
+        For salary amounts, look in the earnings section:
+        - Look for "Salary" line with two amounts - take the FIRST amount (current period) and SECOND amount (year-to-date total)
         - The format is typically "Salary [current amount] [year-to-date amount]"
+        - If you cannot find salary information, return 0 for that value
 
         For RSU amount, look in the benefits/information section:
         - Look for "RSU Vesting" followed by an amount - this is the year-to-date RSU amount
@@ -73,7 +75,7 @@ public actor PayslipReader {
 
             // Use the structured response directly
             let result = response.content
-            logger.info("AI extracted - Federal YTD: \(result.federalTaxYTD), State YTD: \(result.stateTaxYTD), Federal Current: \(result.federalTaxCurrent), State Current: \(result.stateTaxCurrent), Date: \(result.checkDate)")
+            logger.info("AI extracted - Federal YTD: \(result.federalTaxYTD), State YTD: \(result.stateTaxYTD), Federal Current: \(result.federalTaxCurrent), State Current: \(result.stateTaxCurrent), Salary Current: \(result.salaryCurrent), Salary YTD: \(result.salaryYTD), Date: \(result.checkDate)")
 
             return result
 

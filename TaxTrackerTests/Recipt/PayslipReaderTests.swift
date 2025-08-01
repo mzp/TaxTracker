@@ -23,7 +23,8 @@ struct PayslipReaderTests {
             #expect(extractedData.federalTaxYTD > 0)
             #expect(extractedData.stateTaxCurrent >= 0) // State tax might be 0 if the state doesn't have income tax
             #expect(extractedData.stateTaxYTD >= 0)
-            #expect(extractedData.salaryYTD >= 0) // Salary should be non-negative
+            #expect(extractedData.salaryCurrent >= 0) // Current salary should be non-negative
+            #expect(extractedData.salaryYTD >= 0) // Salary YTD should be non-negative
             #expect(extractedData.rsuYTD >= 0) // RSU might be 0 if not found
 
             let today = date(2025, 7, 18)
@@ -62,6 +63,7 @@ struct PayslipReaderTests {
             stateTaxYTD: stateTax,
             federalTaxCurrent: 200.0,
             stateTaxCurrent: 50.0,
+            salaryCurrent: 5000.0,
             salaryYTD: salary,
             rsuYTD: rsu,
             checkDate: checkDateString
@@ -69,6 +71,7 @@ struct PayslipReaderTests {
 
         #expect(payslipData.federalTaxYTD == federalTax)
         #expect(payslipData.stateTaxYTD == stateTax)
+        #expect(payslipData.salaryCurrent == 5000.0)
         #expect(payslipData.salaryYTD == salary)
         #expect(payslipData.rsuYTD == rsu)
         #expect(payslipData.checkDate == checkDateString)
@@ -92,6 +95,7 @@ struct PayslipReaderTests {
             stateTaxYTD: stateTax,
             federalTaxCurrent: 100.0,
             stateTaxCurrent: 20.0,
+            salaryCurrent: 3000.0,
             salaryYTD: salary,
             rsuYTD: rsu,
             checkDate: invalidDate

@@ -17,6 +17,7 @@ public struct TaxPaymentChart: View {
     }
 
     public var body: some View {
+        let snapshot = model.payment(for: taxType)
         Chart {
             ForEach(snapshot.amounts) { amount in
                 BarMark(
@@ -28,37 +29,17 @@ public struct TaxPaymentChart: View {
             }
         }
         .chartXAxis {
-            AxisMarks(values: gridValues) { _ in
-                AxisGridLine()
-            }
             AxisMarks(values: [snapshot.liabilityAmount]) { _ in
                 AxisGridLine().foregroundStyle(.yellow)
             }
-            AxisMarks(values: [safeHarborAmount]) { _ in
+            AxisMarks(values: [snapshot.safeHarborAmount]) { _ in
                 AxisGridLine().foregroundStyle(.green)
                 AxisValueLabel(format: .currency(code: "USD")).offset(x: -50)
             }
         }
-        .chartXScale(domain: 0 ... (safeHarborAmount * 1.1))
+        .chartXScale(domain: 0 ... (snapshot.safeHarborAmount * 1.1))
         .chartLegend(position: .bottom)
         .frame(height: 100)
-    }
-
-    private var snapshot: TaxTrackingModel.TaxPaymentSnapshot {
-        model.payment(for: taxType)
-    }
-
-    var safeHarborAmount: Double {
-        snapshot.safeHarborAmount
-    }
-
-    var gridValues: [Double] {
-        let value = safeHarborAmount / 4
-        return [
-            value,
-            value * 2,
-            value * 3,
-        ]
     }
 }
 

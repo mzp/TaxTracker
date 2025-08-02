@@ -47,6 +47,8 @@ public final class TaxCalculator: Sendable {
 
     private static let federalStandardDeduction2025 = 15000.0
     private static let californiaStandardDeduction2025 = 5202.0
+    private static let contribution401kLimit2025 = 23500.0
+    private static let hsaContributionLimit2025 = 3550.0
 
     public init(taxType: TaxType) {
         self.taxType = taxType
@@ -58,19 +60,20 @@ public final class TaxCalculator: Sendable {
     }
 
     public func calculateTax(grossIncome: Double, capitalGain: Double = 0, deductions: Double = 0) -> Double {
+        let adjustedGrossIncome = grossIncome - Self.contribution401kLimit2025 - Self.hsaContributionLimit2025
         let totalDeductions = max(deductions, standardDeduction)
 
         switch taxType {
         case .federal:
             // Federal: regular income and capital gains are taxed separately
-            let taxableIncome = max(grossIncome - totalDeductions, 0)
+            let taxableIncome = max(adjustedGrossIncome - totalDeductions, 0)
             let regularTax = calculateProgressiveTax(on: taxableIncome, for: taxType)
             let capitalGainsTax = capitalGain > 0 ? capitalGain * 0.213 : 0
             return regularTax + capitalGainsTax
 
         case .state:
             // State: capital gains are added to taxable income and taxed as regular income
-            let totalTaxableIncome = max(grossIncome + capitalGain - totalDeductions, 0)
+            let totalTaxableIncome = max(adjustedGrossIncome + capitalGain - totalDeductions, 0)
             return calculateProgressiveTax(on: totalTaxableIncome, for: taxType)
         }
     }

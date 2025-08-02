@@ -34,6 +34,10 @@ struct DashboardView: View {
                     TaxPaymentChart(taxType: .federal)
                     TaxPaymentChart(taxType: .state)
                 }
+                GroupBox("Tax Refund Estimate") {
+                    TaxRefundChart(taxType: .federal)
+                    TaxRefundChart(taxType: .state)
+                }
             }
         }
         .environment(model)

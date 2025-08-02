@@ -45,6 +45,9 @@ struct TaxPaymentChartWidgetEntryView: View {
             if let model = model {
                 TaxPaymentChart(taxType: entry.configuration.taxType.taxType)
                     .environment(model)
+                
+                TaxRefundChart(taxType: entry.configuration.taxType.taxType)
+                    .environment(model)
             } else {
                 Text("No data available")
                     .font(.caption)
